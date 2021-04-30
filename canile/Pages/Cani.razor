@@ -1,0 +1,112 @@
+﻿@page "/cani"
+@inject BancaDati db
+
+
+
+@if (nuovo == null)
+{
+    <table class=" table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Eta</th>
+            <th>Adozione</th>
+            <th>Razza</th>
+            <th>Maschio</th>
+            <th>Aquisizione</th>
+            <th>Sterilizzazione</th>
+            <th>Modifica</th>
+            <th>Cancellazione</th>
+        </tr>
+        @foreach (Cane singolo in db.cani)
+        {
+            <tr>
+                <td>@singolo.ID</td>
+                <td>@singolo.Nome</td>
+                <td>@singolo.Eta</td>
+                <td>@singolo.Adozione</td>
+                <td>@singolo.Razza</td>
+                <td>@singolo.Maschio</td>
+                <td>@singolo.Aquisizione</td>
+                <td>@singolo.Sterilizzazione</td>
+                <td><button @onclick="(e => Modifica(singolo))" style="background-color:blue" class="oi oi-wrench"></button></td>
+                <td><button @onclick="(e => Cancella(singolo))" style="background-color:red" class="oi oi-trash"></button></td>
+            </tr>
+        }
+    </table>
+
+    <button @onclick="(e => Aggiungi())">nuovo</button>
+}
+else
+{
+    <p>Inserici i dati del cane e premi SALVA!</p>
+    <p>
+        <label for="nome">Nome</label>
+        <input id="nome" @bind-value="nuovo.Nome" />
+    </p>
+    <p>
+        <label for="eta">Eta</label>
+        <input id="eta" @bind-value="nuovo.Eta" />
+    </p>
+    <p>
+        <label for="adozione">Adozione</label>
+        <input id="adozione" @bind-value="nuovo.Adozione" />
+    </p>
+    <p>
+        <label for="razza">Razza</label>
+        <input id="razza" @bind-value="nuovo.Razza" />
+    </p>
+    <p>
+        <label for="maschio">Maschio</label>
+        <input id="maschio" type="checkbox" @bind="nuovo.Maschio" />
+    </p>
+    <p>
+        <label for="aquisizione">Aquisizione</label>
+        <input id="aquisizione" @bind="nuovo.Aquisizione" />
+    </p>
+    <p>
+        <label for="sterelizzazione">Sterilizzato</label>
+        <input id="sterelizzazione" type="checkbox" @bind="nuovo.Sterilizzazione" />
+    </p>
+    <br />
+    <button @onclick="(e => Salva())">SALVA</button>
+}
+
+
+
+@code
+{
+
+    private Cane nuovo;
+
+    private void Cancella(Cane daCancellare)
+    {
+        db.cani.Remove(daCancellare);
+        db.SaveChanges();
+    }
+
+    private void Aggiungi()
+    {
+        nuovo = new Cane();
+    }
+
+    private void Modifica(Cane daModificare)
+    {
+        nuovo = daModificare;
+    }
+
+    private void Salva()
+    {
+        if (nuovo.ID == 0)
+        {
+            db.cani.Add(nuovo);
+        }
+        else
+        {
+            db.cani.Update(nuovo);
+        }
+
+        db.SaveChanges();
+        nuovo = null;
+    }
+}
