@@ -24,3 +24,7 @@ Canile.db rappresenta il database dei cani, in cui si andrà a a Salvare i dati 
 Modificare se ci dovessere essere delle mofifiche da svolgere e infine Eliminare il rispettivo campo.
 
       USER FLOW
+      Qui apparirà la HOME della mia single page
+![canile1](https://user-images.githubusercontent.com/73218507/116679195-883a7900-a9aa-11eb-8767-64ac2b5a0735.png)
+      Qui apparirà il canile con gli implementi crud dell mio Canile
+![canile2](https://user-images.githubusercontent.com/73218507/116679197-88d30f80-a9aa-11eb-906d-20c27f49f331.png)
